@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-box {
+            background: white;
+            padding: 25px;
+            width: 300px;
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            background: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #message {
+            margin-top: 10px;
+            text-align: center;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-box">
+    <h2>Вход</h2>
+
+    <input type="text" id="username" placeholder="Логин" required>
+    <input type="password" id="password" placeholder="Пароль" required>
+
+    <button id="loginBtn">Войти</button>
+
+    <div id="message"></div>
+</div>
+
+<script>
+const message = document.getElementById("message");
+
+document.getElementById("loginBtn").addEventListener("click", async () => {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    if (!username || !password) {
+        message.textContent = "Заполните все поля";
+        return;
+    }
+
+    try {
+        const response = await fetch("/post-login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            message.textContent = data.detail || "Ошибка входа";
+            return;
+        }
+
+
+        localStorage.setItem("access_token", data.access_token);
+
+
+        message.style.color = "green";
+        message.textContent = "Вход выполнен";
+
+
+        window.location.href = "/loged";
+
+    } catch (err) {
+        message.textContent = "Ошибка соединения с сервером";
+    }
+});
+</script>
+
+</body>
+</html>
