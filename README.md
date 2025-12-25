@@ -21,9 +21,9 @@
 >
 >>- [X] Endpoints
 Method	Endpoint	Description\
-GET____/________________#Main page\
-GET ____ /register ________#Registration page\
-GET ____ /login __________#Login page\
-POST ___ /post_register ___ #Register new user\
-POST ___ /post-login	   ______ #Login and get JWT\
-GET ____ /check-token	_____#Verify JWT token
+GET _ / _ #Main page\
+GET _ /register _ #Registration page\
+GET _ /login _#Login page\
+POST _ /post_register _ #Register new user\
+POST _ /post-login	  _ #Login and get JWT\
+GET _ /check-token	_ #Verify JWT token
